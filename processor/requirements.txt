@@ -1,0 +1,5 @@
+fastapi>=0.111.0,<0.112.0
+uvicorn>=0.30.0,<0.31.0
+google-cloud-storage>=2.17.0,<3.0.0
+google-cloud-bigquery>=3.25.0,<4.0.0
+pydantic>=2.7.0,<3.0.0
