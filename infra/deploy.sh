@@ -3,6 +3,9 @@
 # Exit immediately if a command exits with a non-zero status
 set -euo pipefail
 
+# Get directory of this script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Configuration
 REGION="${REGION:-us-central1}"
 DATASET_NAME="${DATASET_NAME:-doc_processing}"
@@ -32,9 +35,11 @@ echo "Trigger Name:    ${TRIGGER_NAME}"
 echo "Bucket Filter:   ${BUCKET_NAME}"
 echo "============================================================"
 
-# 1. Build and push Docker image via Cloud Build
-echo "Building and pushing container image via Cloud Build..."
-gcloud builds submit --tag "${IMAGE_URI}" ./processor
+# 1. Build and push Docker image via Cloud Build (Bypassing staging bucket)
+echo "Packaging and pushing container image via Cloud Build archive..."
+tar -czf processor_source.tar.gz -C "${SCRIPT_DIR}/../processor" .
+gcloud builds submit processor_source.tar.gz --tag "${IMAGE_URI}"
+rm -f processor_source.tar.gz
 
 # 2. Deploy Cloud Run service
 echo "Deploying service to Cloud Run..."
