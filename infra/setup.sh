@@ -127,6 +127,13 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
   --role="roles/eventarc.eventReceiver" \
   --condition=None
 
+# Cloud Run Invoker (needed for Eventarc to invoke the private Cloud Run service)
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+  --member="serviceAccount:${TRIGGER_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com" \
+  --role="roles/run.invoker" \
+  --condition=None
+
+
 # 7. Grant Pub/Sub Publisher to GCS Service Agent
 echo "Granting Pub/Sub Publisher role to GCS Service Agent..."
 # GCS Service Agent format is service-PROJECT_NUMBER@gs-project-accounts.iam.gserviceaccount.com
