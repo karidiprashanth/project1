@@ -1,0 +1,22 @@
+[
+  {
+    "name": "filename",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "date",
+    "type": "TIMESTAMP",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "tags",
+    "type": "STRING",
+    "mode": "REPEATED"
+  },
+  {
+    "name": "word_count",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  }
+]

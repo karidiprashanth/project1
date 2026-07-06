@@ -3,6 +3,9 @@
 # Exit immediately if a command exits with a non-zero status
 set -euo pipefail
 
+# Get directory of this script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Configuration
 REGION="${REGION:-us-central1}"
 DATASET_NAME="${DATASET_NAME:-doc_processing}"
@@ -75,7 +78,7 @@ else
     --time_partitioning_field date \
     --time_partitioning_type DAY \
     "${PROJECT_ID}:${DATASET_NAME}.${TABLE_NAME}" \
-    filename:STRING,date:TIMESTAMP,tags:STRING:REPEATED,word_count:INTEGER
+    "${SCRIPT_DIR}/schema.json"
   echo "Table ${TABLE_NAME} created."
 fi
 
